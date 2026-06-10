@@ -40,7 +40,7 @@ const LiveSite = () => {
             title='Live Site'
             srcDoc={html}
             className='w-screen h-screen border-none'
-            sandbox='allow-scripts allow-forms'
+            sandbox='allow-scripts allow-forms allow-popups allow-presentation allow-same-origin'
         />
     )
 }

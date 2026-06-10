@@ -143,7 +143,7 @@ const WebsiteEditor = () => {
             <button onClick={() => setShowFullPreview(true)}><Monitor size={18} /></button>
           </div>
         </div>
-        <iframe ref={iframeRef} className='flex-1 w-full bg-white' sandbox='allow-scripts allow-forms' />
+        <iframe ref={iframeRef} className='flex-1 w-full bg-white' sandbox='allow-scripts allow-forms allow-popups allow-presentation allow-same-origin' />
       </div>
 
       {/* mobile chat preview */}
@@ -208,7 +208,7 @@ const WebsiteEditor = () => {
       <AnimatePresence>
         {showFullPreview && (
           <div className='fixed inset-0 bg-black z-9999'>
-            <iframe srcDoc={code} className='w-full h-full bg-white' sandbox='allow-scripts allow-forms' />
+            <iframe srcDoc={code} className='w-full h-full bg-white' sandbox='allow-scripts allow-forms allow-popups allow-presentation allow-same-origin' />
             <button onClick={() => setShowFullPreview(false)} className='absolute top-4 right-4 p-2 bg-black/70 rounded-lg'><X /></button>
           </div>
         )}
