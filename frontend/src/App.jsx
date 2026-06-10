@@ -1,11 +1,11 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Home from './pages/Home'
-import Pricing from './pages/Pricing'
-import Dashboard from './pages/Dashboard'
-import Generate from './pages/Generate'
-import WebsiteEditor from './pages/WebsiteEditor'
-import LiveSite from './pages/LiveSite'
+import Home from './Pages/Home'
+import Pricing from './Pages/Pricing'
+import Dashboard from './Pages/Dashboard'
+import Generate from './Pages/Generate'
+import WebsiteEditor from './Pages/WebsiteEditor'
+import LiveSite from './Pages/LiveSite'
 
 const App = () => {
   return (
