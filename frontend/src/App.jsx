@@ -16,7 +16,7 @@ const App = () => {
       <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='/generate' element={<Generate/>}/>
       <Route path='/editor/:id' element={<WebsiteEditor/>}/>
-      <Route path='/site/:id' element={<LiveSite/>}/>
+      <Route path='/site/:slug' element={<LiveSite/>}/>
    </Routes>
   </BrowserRouter>
   )

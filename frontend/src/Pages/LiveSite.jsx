@@ -5,36 +5,43 @@ import { useParams } from 'react-router-dom'
 const LiveSite = () => {
     const [html, setHtml] = useState("")
     const [error, setError] = useState("")
-    const { id } = useParams()
-     console.log(id)
+
+    const { slug } = useParams()
+
+    console.log(slug) // ✅ correct
+
     useEffect(() => {
         const handleGetWebsite = async () => {
             try {
-                const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/website/getbyslug/${id}`,
-                    {withCredentials:true}
+                const res = await axios.get(
+                    `${import.meta.env.VITE_SERVER_URL}/api/website/getbyslug/${slug}`,
+                    { withCredentials: true }
                 )
-                    setHtml(res.data.latestCode)
+                setHtml(res.data.latestCode)
             } catch (error) {
                 console.log(error)
-                setError(error.response.data.message)
+                setError(error?.response?.data?.message || "Error")
             }
         }
-        handleGetWebsite()
-    }, [])
 
-    if(error){
+        handleGetWebsite()
+    }, [slug])
+
+    if (error) {
         return (
-            <div className='h-screen flex items-center justify-center bg-black text-white'>{error}</div>
+            <div className='h-screen flex items-center justify-center bg-black text-white'>
+                {error}
+            </div>
         )
     }
 
     return (
-      <iframe
-       title='Live Site'
-       srcDoc={html}
-       className='w-screen h-screen border-none'
-       sandbox='allow-scripts allow-forms'
-      />
+        <iframe
+            title='Live Site'
+            srcDoc={html}
+            className='w-screen h-screen border-none'
+            sandbox='allow-scripts allow-forms'
+        />
     )
 }
 
