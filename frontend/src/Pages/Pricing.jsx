@@ -3,8 +3,9 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { color, motion } from 'motion/react'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setUserData } from '../redux/userSlice'
+import LoginModal from '../components/LoginModal'
 
 
 const plans = [
@@ -57,10 +58,23 @@ const plans = [
 const Pricing = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [openLogin, setOpenLogin] = useState(false)
+    const [openComingSoon, setOpenComingSoon] = useState(false)
+    const user = useSelector((state) => state.user.userData)
 
     const handlePayment = async (plan) => {
         if (plan.id === "free") {
+            if (!user) {
+                setOpenLogin(true)
+                return
+            }
             navigate("/dashboard")
+            return
+        }
+
+        // Show coming soon for pro and enterprise
+        if (plan.id === "pro" || plan.id === "enterprise") {
+            setOpenComingSoon(true)
             return
         }
 
@@ -166,6 +180,40 @@ const Pricing = () => {
                     </motion.div>
                 ))}
             </div>
+            <LoginModal open={openLogin} onClose={() => setOpenLogin(false)} />
+            
+            {/* Coming Soon Modal */}
+            {openComingSoon && (
+                <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm'>
+                    <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className='relative bg-gradient-to-b from-indigo-900/40 to-purple-900/40 border border-indigo-500/50 rounded-2xl p-8 max-w-md mx-4 backdrop-blur-xl'
+                    >
+                        <button
+                            onClick={() => setOpenComingSoon(false)}
+                            className='absolute top-4 right-4 text-gray-400 hover:text-white transition'
+                        >
+                            ✕
+                        </button>
+                        
+                        <div className='text-center'>
+                            <div className='mb-4 inline-block p-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full'>
+                                <span className='text-2xl'>🚀</span>
+                            </div>
+                            <h2 className='text-2xl font-bold mb-2 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent'>Coming Soon!</h2>
+                            <p className='text-gray-300 mb-6'>Premium plans will be available very soon. Stay tuned! 🎉</p>
+                            <p className='text-sm text-gray-400 mb-8'>We're working hard to bring you the best experience</p>
+                            <button
+                                onClick={() => setOpenComingSoon(false)}
+                                className='w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 rounded-xl font-semibold transition'
+                            >
+                                Got it!
+                            </button>
+                        </div>
+                    </motion.div>
+                </div>
+            )}
         </div>
     )
 }
